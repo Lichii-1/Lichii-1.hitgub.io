@@ -1,6 +1,4 @@
-// Base de datos expandida de productos
 const products = [
-  // BALLET
   {
     id: 1,
     name: "Malla de Ballet Clásica",
@@ -67,8 +65,6 @@ const products = [
     sizes: ["Único"],
     colors: ["Negro", "Gris", "Rosa", "Blanco"],
   },
-
-  // JAZZ
   {
     id: 7,
     name: "Top Jazz Deportivo",
@@ -124,8 +120,6 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Negro/Azul", "Gris/Rosa", "Azul/Blanco"],
   },
-
-  // CONTEMPORÁNEO
   {
     id: 12,
     name: "Vestido Contemporáneo Fluido",
@@ -170,8 +164,6 @@ const products = [
     sizes: ["35", "36", "37", "38", "39", "40", "41"],
     colors: ["Beige", "Negro"],
   },
-
-  // HIP HOP
   {
     id: 16,
     name: "Conjunto Hip Hop Urbano",
@@ -216,8 +208,6 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     colors: ["Negro", "Gris", "Azul Marino", "Verde"],
   },
-
-  // TAP
   {
     id: 20,
     name: "Zapatillas de Tap Profesional",
@@ -251,8 +241,6 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Negro", "Azul Marino", "Gris"],
   },
-
-  // FOLCLORE
   {
     id: 23,
     name: "Pollera Folclórica Tradicional",
@@ -297,8 +285,6 @@ const products = [
     sizes: ["Único"],
     colors: ["Rojo", "Azul", "Verde", "Amarillo", "Blanco"],
   },
-
-  // ACCESORIOS GENERALES
   {
     id: 27,
     name: "Bolso de Danza Grande",
@@ -367,14 +353,11 @@ const products = [
   },
 ]
 
-// Carrito de compras
 let cart = JSON.parse(localStorage.getItem("cart")) || []
 
-// Inicialización
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount()
 
-  // Navegación móvil
   const hamburger = document.querySelector(".hamburger")
   const navMenu = document.querySelector(".nav-menu")
 
@@ -384,25 +367,20 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
-  // Cargar productos si estamos en la página de productos
   if (document.getElementById("products-container")) {
     loadProducts()
     setupFilters()
   }
 
-  // Cargar carrito si estamos en la página del carrito
   if (document.getElementById("cart-items")) {
     loadCart()
   }
 })
 
-// Funciones para productos
 function loadProducts(filter = "all") {
   const container = document.getElementById("products-container")
   if (!container) return
-
   const filteredProducts = filter === "all" ? products : products.filter((product) => product.category === filter)
-
   container.innerHTML = filteredProducts
     .map(
       (product) => `
@@ -472,10 +450,8 @@ function addToCart(productId) {
   saveCart()
   updateCartCount()
 
-  // Mostrar toast de éxito
   showToast(`${product.name} agregado al carrito`, "success")
 
-  // Feedback visual en el botón
   const btn = event.target
   const originalText = btn.textContent
   btn.textContent = "¡Agregado!"
@@ -487,7 +463,6 @@ function addToCart(productId) {
   }, 1000)
 }
 
-// Funciones del carrito
 function loadCart() {
   const container = document.getElementById("cart-items")
   if (!container) return
@@ -609,6 +584,7 @@ function setupCheckout() {
         title: "Confirmar Pedido",
         message: "Revisa tu pedido antes de confirmar:",
         orderSummary: orderSummary,
+        showLogo: true,
         actions: [
           {
             text: "Confirmar Compra",
@@ -620,6 +596,8 @@ function setupCheckout() {
                   type: "success",
                   title: "¡Compra Exitosa!",
                   message: `¡Gracias por tu compra! Tu pedido por $${total} ha sido procesado correctamente. Te contactaremos pronto para coordinar el pago y envío.`,
+                  showLogo: true,
+                  showCheckmark: true,
                   actions: [
                     {
                       text: "Continuar Comprando",
@@ -661,7 +639,6 @@ function setupCheckout() {
   }
 }
 
-// Funciones para modales y toasts
 function showModal(config) {
   const overlay = document.createElement("div")
   overlay.className = "modal-overlay"
@@ -679,9 +656,15 @@ function showModal(config) {
     modal.classList.add("success-animation")
   }
 
+  const logoHtml = config.showLogo ? '<div class="modal-logo">NB</div>' : ""
+  const checkmarkHtml = config.showCheckmark ? '<div class="success-checkmark"></div>' : ""
+  const iconHtml = config.showCheckmark ? "" : `<div class="modal-icon ${config.type}">${iconMap[config.type]}</div>`
+
   modal.innerHTML = `
-    <div class="modal-header">
-      <div class="modal-icon ${config.type}">${iconMap[config.type]}</div>
+    <div class="modal-header ${config.showLogo ? "with-logo" : ""}">
+      ${logoHtml}
+      ${checkmarkHtml}
+      ${iconHtml}
       <h3>${config.title}</h3>
     </div>
     <div class="modal-body">
@@ -689,31 +672,23 @@ function showModal(config) {
       ${config.orderSummary ? `<div class="modal-order-summary">${config.orderSummary}</div>` : ""}
     </div>
     <div class="modal-actions">
-      ${config.actions
-        .map(
-          (action) =>
-            `<button class="modal-btn ${action.class}" onclick="${action.action.toString().replace("function", "function temp")}; temp()">${action.text}</button>`,
-        )
-        .join("")}
+      ${config.actions.map((action) => `<button class="modal-btn ${action.class}">${action.text}</button>`).join("")}
     </div>
   `
 
   overlay.appendChild(modal)
   document.body.appendChild(overlay)
 
-  // Activar modal con animación
   setTimeout(() => {
     overlay.classList.add("active")
   }, 10)
 
-  // Cerrar con click en overlay
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
       closeModal()
     }
   })
 
-  // Guardar referencias de las acciones
   config.actions.forEach((action, index) => {
     const btn = modal.querySelectorAll(".modal-btn")[index]
     btn.onclick = action.action
@@ -749,7 +724,6 @@ function showToast(message, type = "info") {
   }, 3000)
 }
 
-// Funciones auxiliares
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0)
   const countElements = document.querySelectorAll("#cart-count")
