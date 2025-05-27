@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NB Estudio de Danza - Productos</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">NB Estudio de Danza</h1>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="productos.html" class="nav-link active">Productos</a></li>
+                    <li><a href="carrito.html" class="nav-link">Carrito <span id="cart-count">0</span></a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="products-hero">
+            <div class="container">
+                <h2>Nuestros Productos</h2>
+                <p>Encuentra el vestuario perfecto para tu disciplina</p>
+            </div>
+        </section>
+
+        <section class="products">
+            <div class="container">
+                <div class="filters">
+                    <h3>Filtrar por categoría:</h3>
+                    <select id="category-filter">
+                        <option value="all">Todos los productos</option>
+                        <option value="ballet">Ballet</option>
+                        <option value="jazz">Jazz</option>
+                        <option value="contemporaneo">Contemporáneo</option>
+                        <option value="hip-hop">Hip Hop</option>
+                        <option value="tap">Tap</option>
+                        <option value="folclore">Folclore</option>
+                        <option value="accesorios">Accesorios</option>
+                    </select>
+                </div>
+
+                <div class="products-grid" id="products-container">
+                    <!-- Los productos se cargan dinámicamente con JavaScript -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 NB Estudio de Danza. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>

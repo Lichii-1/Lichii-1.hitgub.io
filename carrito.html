@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NB Estudio de Danza - Carrito</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <h1 class="logo">NB Estudio de Danza</h1>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="productos.html" class="nav-link">Productos</a></li>
+                    <li><a href="carrito.html" class="nav-link active">Carrito <span id="cart-count">0</span></a></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="cart-hero">
+            <div class="container">
+                <h2>Tu Carrito de Compras</h2>
+            </div>
+        </section>
+
+        <section class="cart">
+            <div class="container">
+                <div class="cart-content">
+                    <div class="cart-items" id="cart-items">
+                        <!-- Los items del carrito se cargan dinámicamente -->
+                    </div>
+                    
+                    <div class="cart-summary">
+                        <h3>Resumen de Compra</h3>
+                        <div class="summary-line">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">$0</span>
+                        </div>
+                        <div class="summary-line">
+                            <span>Envío:</span>
+                            <span id="shipping">$500</span>
+                        </div>
+                        <div class="summary-line total">
+                            <span>Total:</span>
+                            <span id="total">$500</span>
+                        </div>
+                        <button class="btn-primary btn-checkout" id="checkout-btn">Finalizar Compra</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 NB Estudio de Danza. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="./script.js"></script>
+</body>
+</html>
