@@ -1,6 +1,4 @@
-// Base de datos expandida de productos
 const products = [
-  // BALLET
   {
     id: 1,
     name: "Malla de Ballet Clásica",
@@ -67,8 +65,6 @@ const products = [
     sizes: ["Único"],
     colors: ["Negro", "Gris", "Rosa", "Blanco"],
   },
-
-  // JAZZ
   {
     id: 7,
     name: "Top Jazz Deportivo",
@@ -124,8 +120,6 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Negro/Azul", "Gris/Rosa", "Azul/Blanco"],
   },
-
-  // CONTEMPORÁNEO
   {
     id: 12,
     name: "Vestido Contemporáneo Fluido",
@@ -170,8 +164,6 @@ const products = [
     sizes: ["35", "36", "37", "38", "39", "40", "41"],
     colors: ["Beige", "Negro"],
   },
-
-  // HIP HOP
   {
     id: 16,
     name: "Conjunto Hip Hop Urbano",
@@ -216,8 +208,6 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     colors: ["Negro", "Gris", "Azul Marino", "Verde"],
   },
-
-  // TAP
   {
     id: 20,
     name: "Zapatillas de Tap Profesional",
@@ -251,8 +241,6 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Negro", "Azul Marino", "Gris"],
   },
-
-  // UNIFORMES (reemplaza folclore)
   {
     id: 23,
     name: "Buzo Deportivo NB",
@@ -319,8 +307,6 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     colors: ["Azul Marino", "Negro", "Gris", "Celeste"],
   },
-
-  // ACCESORIOS GENERALES
   {
     id: 29,
     name: "Bolso de Danza Grande",
@@ -367,36 +353,26 @@ const products = [
   },
 ]
 
-// Carrito de compras
 let cart = JSON.parse(localStorage.getItem("cart")) || []
 
-// Inicialización
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount()
-
-  // Navegación móvil
   const hamburger = document.querySelector(".hamburger")
   const navMenu = document.querySelector(".nav-menu")
-
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       navMenu.classList.toggle("active")
     })
   }
-
-  // Cargar productos si estamos en la página de productos
   if (document.getElementById("products-container")) {
     loadProducts()
     setupFilters()
   }
-
-  // Cargar carrito si estamos en la página del carrito
   if (document.getElementById("cart-items")) {
     loadCart()
   }
 })
 
-// Funciones para productos
 function loadProducts(filter = "all") {
   const container = document.getElementById("products-container")
   if (!container) return
@@ -472,10 +448,8 @@ function addToCart(productId) {
   saveCart()
   updateCartCount()
 
-  // Mostrar toast de éxito
   showToast(`${product.name} agregado al carrito`, "success")
 
-  // Feedback visual en el botón
   const btn = event.target
   const originalText = btn.textContent
   btn.textContent = "¡Agregado!"
@@ -487,7 +461,6 @@ function addToCart(productId) {
   }, 1000)
 }
 
-// Funciones del carrito
 function loadCart() {
   const container = document.getElementById("cart-items")
   if (!container) return
@@ -664,7 +637,6 @@ function setupCheckout() {
   }
 }
 
-// Funciones para modales y toasts
 function showModal(config) {
   const overlay = document.createElement("div")
   overlay.className = "modal-overlay"
@@ -705,19 +677,16 @@ function showModal(config) {
   overlay.appendChild(modal)
   document.body.appendChild(overlay)
 
-  // Activar modal con animación
   setTimeout(() => {
     overlay.classList.add("active")
   }, 10)
 
-  // Cerrar con click en overlay
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
       closeModal()
     }
   })
 
-  // Guardar referencias de las acciones
   config.actions.forEach((action, index) => {
     const btn = modal.querySelectorAll(".modal-btn")[index]
     btn.onclick = action.action
@@ -753,7 +722,6 @@ function showToast(message, type = "info") {
   }, 3000)
 }
 
-// Funciones auxiliares
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0)
   const countElements = document.querySelectorAll("#cart-count")
