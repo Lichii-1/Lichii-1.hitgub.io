@@ -1,4 +1,6 @@
+// Base de datos expandida de productos
 const products = [
+  // BALLET
   {
     id: 1,
     name: "Malla de Ballet Clásica",
@@ -65,6 +67,8 @@ const products = [
     sizes: ["Único"],
     colors: ["Negro", "Gris", "Rosa", "Blanco"],
   },
+
+  // JAZZ
   {
     id: 7,
     name: "Top Jazz Deportivo",
@@ -120,6 +124,8 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Negro/Azul", "Gris/Rosa", "Azul/Blanco"],
   },
+
+  // CONTEMPORÁNEO
   {
     id: 12,
     name: "Vestido Contemporáneo Fluido",
@@ -164,6 +170,8 @@ const products = [
     sizes: ["35", "36", "37", "38", "39", "40", "41"],
     colors: ["Beige", "Negro"],
   },
+
+  // HIP HOP
   {
     id: 16,
     name: "Conjunto Hip Hop Urbano",
@@ -208,6 +216,8 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
     colors: ["Negro", "Gris", "Azul Marino", "Verde"],
   },
+
+  // TAP
   {
     id: 20,
     name: "Zapatillas de Tap Profesional",
@@ -241,52 +251,78 @@ const products = [
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Negro", "Azul Marino", "Gris"],
   },
+
+  // UNIFORMES (reemplaza folclore)
   {
     id: 23,
-    name: "Pollera Folclórica Tradicional",
-    price: 4500,
-    category: "folclore",
-    type: "pollera",
+    name: "Buzo Deportivo NB",
+    price: 3200,
+    category: "uniformes",
+    type: "buzo",
     image: "/placeholder.svg?height=200&width=280",
-    description: "Pollera tradicional con vuelo y bordados.",
-    sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["Rojo", "Azul", "Verde", "Amarillo"],
+    description: "Buzo cómodo con capucha y logo bordado NB.",
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    colors: ["Azul Marino", "Negro", "Gris", "Celeste"],
   },
   {
     id: 24,
-    name: "Blusa Folclórica Bordada",
-    price: 2800,
-    category: "folclore",
-    type: "blusa",
+    name: "Calza Deportiva Básica",
+    price: 1800,
+    category: "uniformes",
+    type: "calza",
     image: "/placeholder.svg?height=200&width=280",
-    description: "Blusa con bordados tradicionales y mangas amplias.",
+    description: "Calza de lycra con cintura alta y logo lateral.",
     sizes: ["XS", "S", "M", "L", "XL"],
-    colors: ["Blanco", "Crema", "Celeste"],
+    colors: ["Negro", "Azul Marino", "Gris", "Celeste"],
   },
   {
     id: 25,
-    name: "Alpargatas Folclóricas",
-    price: 2200,
-    category: "folclore",
-    type: "calzado",
+    name: "Pantalón Deportivo Recto",
+    price: 2500,
+    category: "uniformes",
+    type: "pantalon",
     image: "/placeholder.svg?height=200&width=280",
-    description: "Alpargatas tradicionales con cintas.",
-    sizes: ["35", "36", "37", "38", "39", "40", "41"],
-    colors: ["Negro", "Marrón", "Beige"],
+    description: "Pantalón deportivo con cordón ajustable y bolsillos.",
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    colors: ["Azul Marino", "Negro", "Gris"],
   },
   {
     id: 26,
-    name: "Pañuelo Folclórico",
-    price: 600,
-    category: "folclore",
-    type: "accesorio",
+    name: "Remera Deportiva NB",
+    price: 1500,
+    category: "uniformes",
+    type: "remera",
     image: "/placeholder.svg?height=200&width=280",
-    description: "Pañuelo tradicional para danzas folclóricas.",
-    sizes: ["Único"],
-    colors: ["Rojo", "Azul", "Verde", "Amarillo", "Blanco"],
+    description: "Remera de algodón con logo NB estampado.",
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    colors: ["Blanco", "Azul Marino", "Negro", "Celeste", "Gris"],
   },
   {
     id: 27,
+    name: "Campera Deportiva",
+    price: 4200,
+    category: "uniformes",
+    type: "campera",
+    image: "/placeholder.svg?height=200&width=280",
+    description: "Campera deportiva con cierre y capucha desmontable.",
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    colors: ["Azul Marino", "Negro", "Gris"],
+  },
+  {
+    id: 28,
+    name: "Short Deportivo",
+    price: 1200,
+    category: "uniformes",
+    type: "short",
+    image: "/placeholder.svg?height=200&width=280",
+    description: "Short deportivo con cordón y bolsillos laterales.",
+    sizes: ["XS", "S", "M", "L", "XL", "XXL"],
+    colors: ["Azul Marino", "Negro", "Gris", "Celeste"],
+  },
+
+  // ACCESORIOS GENERALES
+  {
+    id: 29,
     name: "Bolso de Danza Grande",
     price: 3200,
     category: "accesorios",
@@ -297,7 +333,7 @@ const products = [
     colors: ["Negro", "Azul", "Rosa", "Gris"],
   },
   {
-    id: 28,
+    id: 30,
     name: "Toalla de Microfibra",
     price: 800,
     category: "accesorios",
@@ -308,7 +344,7 @@ const products = [
     colors: ["Azul", "Rosa", "Gris", "Blanco"],
   },
   {
-    id: 29,
+    id: 31,
     name: "Botella de Agua Deportiva",
     price: 1200,
     category: "accesorios",
@@ -319,7 +355,7 @@ const products = [
     colors: ["Azul", "Rosa", "Negro", "Transparente"],
   },
   {
-    id: 30,
+    id: 32,
     name: "Vincha Deportiva",
     price: 500,
     category: "accesorios",
@@ -329,35 +365,16 @@ const products = [
     sizes: ["Único"],
     colors: ["Negro", "Azul", "Rosa", "Blanco", "Gris"],
   },
-  {
-    id: 31,
-    name: "Medias de Danza Convertibles",
-    price: 900,
-    category: "accesorios",
-    type: "medias",
-    image: "/placeholder.svg?height=200&width=280",
-    description: "Medias que se pueden usar con o sin pie.",
-    sizes: ["S", "M", "L"],
-    colors: ["Rosa", "Negro", "Beige", "Blanco"],
-  },
-  {
-    id: 32,
-    name: "Rodilleras Protectoras",
-    price: 1800,
-    category: "accesorios",
-    type: "proteccion",
-    image: "/placeholder.svg?height=200&width=280",
-    description: "Rodilleras acolchadas para danza contemporánea.",
-    sizes: ["S", "M", "L"],
-    colors: ["Negro", "Beige"],
-  },
 ]
 
+// Carrito de compras
 let cart = JSON.parse(localStorage.getItem("cart")) || []
 
+// Inicialización
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount()
 
+  // Navegación móvil
   const hamburger = document.querySelector(".hamburger")
   const navMenu = document.querySelector(".nav-menu")
 
@@ -367,20 +384,25 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   }
 
+  // Cargar productos si estamos en la página de productos
   if (document.getElementById("products-container")) {
     loadProducts()
     setupFilters()
   }
 
+  // Cargar carrito si estamos en la página del carrito
   if (document.getElementById("cart-items")) {
     loadCart()
   }
 })
 
+// Funciones para productos
 function loadProducts(filter = "all") {
   const container = document.getElementById("products-container")
   if (!container) return
+
   const filteredProducts = filter === "all" ? products : products.filter((product) => product.category === filter)
+
   container.innerHTML = filteredProducts
     .map(
       (product) => `
@@ -450,8 +472,10 @@ function addToCart(productId) {
   saveCart()
   updateCartCount()
 
+  // Mostrar toast de éxito
   showToast(`${product.name} agregado al carrito`, "success")
 
+  // Feedback visual en el botón
   const btn = event.target
   const originalText = btn.textContent
   btn.textContent = "¡Agregado!"
@@ -463,6 +487,7 @@ function addToCart(productId) {
   }, 1000)
 }
 
+// Funciones del carrito
 function loadCart() {
   const container = document.getElementById("cart-items")
   if (!container) return
@@ -639,6 +664,7 @@ function setupCheckout() {
   }
 }
 
+// Funciones para modales y toasts
 function showModal(config) {
   const overlay = document.createElement("div")
   overlay.className = "modal-overlay"
@@ -679,16 +705,19 @@ function showModal(config) {
   overlay.appendChild(modal)
   document.body.appendChild(overlay)
 
+  // Activar modal con animación
   setTimeout(() => {
     overlay.classList.add("active")
   }, 10)
 
+  // Cerrar con click en overlay
   overlay.addEventListener("click", (e) => {
     if (e.target === overlay) {
       closeModal()
     }
   })
 
+  // Guardar referencias de las acciones
   config.actions.forEach((action, index) => {
     const btn = modal.querySelectorAll(".modal-btn")[index]
     btn.onclick = action.action
@@ -724,6 +753,7 @@ function showToast(message, type = "info") {
   }, 3000)
 }
 
+// Funciones auxiliares
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0)
   const countElements = document.querySelectorAll("#cart-count")

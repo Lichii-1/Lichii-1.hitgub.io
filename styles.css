@@ -1,4 +1,4 @@
-
+/* Reset y variables */
 * {
   margin: 0;
   padding: 0;
@@ -28,6 +28,7 @@ body {
   padding: 0 20px;
 }
 
+/* Header y Navegación */
 .navbar {
   background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
   padding: 1rem 0;
@@ -94,6 +95,7 @@ body {
   transition: 0.3s;
 }
 
+/* Secciones principales */
 .hero {
   background: linear-gradient(135deg, var(--sky-blue), var(--light-blue));
   padding: 4rem 0;
@@ -128,6 +130,7 @@ body {
   background-color: #1d4ed8;
 }
 
+/* Sección About */
 .about {
   padding: 4rem 0;
   background-color: var(--light-gray);
@@ -172,8 +175,85 @@ body {
   box-shadow: var(--shadow);
 }
 
+/* Sección Testimonials */
+.testimonials {
+  padding: 4rem 0;
+  background-color: var(--white);
+}
+
+.testimonials h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--primary-blue);
+  font-size: 2rem;
+}
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background-color: var(--white);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(96, 165, 250, 0.1);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+}
+
+.testimonial-content {
+  margin-bottom: 1.5rem;
+}
+
+.testimonial-content p {
+  font-style: italic;
+  color: var(--dark-gray);
+  line-height: 1.6;
+  font-size: 1rem;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.author-info h4 {
+  color: var(--primary-blue);
+  margin-bottom: 0.25rem;
+  font-size: 1rem;
+}
+
+.author-info span {
+  color: var(--light-blue);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Sección Location */
 .location {
   padding: 4rem 0;
+  background-color: var(--light-gray);
 }
 
 .location h2 {
@@ -187,6 +267,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 3rem;
+  align-items: start;
 }
 
 .location-info ul {
@@ -194,21 +275,45 @@ body {
   margin-top: 0.5rem;
 }
 
-.map-placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.location-info li {
+  padding: 0.25rem 0;
 }
 
-.map-box {
-  background-color: var(--light-gray);
-  border: 2px dashed var(--light-blue);
-  padding: 3rem;
+.location-cta {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--sky-blue), var(--light-blue));
+  border-radius: 8px;
   text-align: center;
-  border-radius: 10px;
-  width: 100%;
 }
 
+.location-cta p {
+  color: var(--white);
+  font-weight: bold;
+  margin: 0;
+}
+
+.map-container {
+  width: 100%;
+  height: 350px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.map-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Productos */
 .products-hero {
   background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
   padding: 3rem 0;
@@ -334,6 +439,7 @@ body {
   color: var(--white);
 }
 
+/* Carrito */
 .cart-hero {
   background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
   padding: 3rem 0;
@@ -449,6 +555,7 @@ body {
   color: var(--dark-gray);
 }
 
+/* Footer */
 footer {
   background-color: var(--primary-blue);
   color: var(--white);
@@ -457,6 +564,7 @@ footer {
   margin-top: 3rem;
 }
 
+/* Modales personalizados */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -715,6 +823,7 @@ footer {
   background-color: #059669;
 }
 
+/* Animación de éxito */
 .success-animation {
   animation: bounce 0.6s ease-in-out;
 }
@@ -734,6 +843,7 @@ footer {
   }
 }
 
+/* Toast notifications */
 .toast {
   position: fixed;
   top: 20px;
@@ -760,6 +870,7 @@ footer {
   background-color: #f59e0b;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
@@ -790,6 +901,10 @@ footer {
   .location-grid {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
   }
 
   .cart-content {
@@ -823,6 +938,10 @@ footer {
     flex-direction: column;
     gap: 0.5rem;
   }
+
+  .map-container {
+    height: 300px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -840,7 +959,8 @@ footer {
 
   .about,
   .location,
-  .products {
+  .products,
+  .testimonials {
     padding: 2rem 0;
   }
 
@@ -860,5 +980,18 @@ footer {
 
   .btn-add-cart {
     width: 100%;
+  }
+
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    padding: 1.5rem;
+  }
+
+  .map-container {
+    height: 250px;
   }
 }
