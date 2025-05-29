@@ -742,3 +742,65 @@ function updateCartCount() {
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart))
 }
+
+function setupCarousel() {
+  const carouselTrack = document.querySelector(".carousel-track")
+  if (!carouselTrack) return
+
+  const slides = document.querySelectorAll(".carousel-slide")
+  const dotsContainer = document.querySelector(".carousel-dots")
+
+  slides.forEach((_, index) => {
+    const dot = document.createElement("div")
+    dot.className = "carousel-dot"
+    if (index === 0) dot.classList.add("active")
+    dot.addEventListener("click", () => {
+      currentSlide = index
+      updateCarousel()
+    })
+    dotsContainer.appendChild(dot)
+  })
+
+  let currentSlide = 0
+  const totalSlides = slides.length
+
+  function updateCarousel() {
+    carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`
+
+    document.querySelectorAll(".carousel-dot").forEach((dot, index) => {
+      dot.classList.toggle("active", index === currentSlide)
+    })
+  }
+
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % totalSlides
+    updateCarousel()
+  }
+
+  const interval = setInterval(nextSlide, 5000)
+
+  carouselTrack.addEventListener("mouseenter", () => {
+    clearInterval(interval)
+  })
+
+  carouselTrack.addEventListener("mouseleave", () => {
+    clearInterval(interval)
+    setInterval(nextSlide, 5000)
+  })
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount()
+
+  const hamburger = document.querySelector(".hamburger")
+  const navMenu = document.querySelector(".nav-menu")
+
+  if (hamburger) {
+    hamburger.addEventListener("click", () => {
+      navMenu.classList.toggle("active")
+    })
+  }
+  if (document.querySelector(".carousel-track")) {
+    setupCarousel()
+  }
+})
