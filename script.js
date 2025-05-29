@@ -5,7 +5,7 @@ const products = [
     price: 2500,
     category: "ballet",
     type: "malla",
-    image: "/placeholder.svg?height=200&width=280",
+    image: "images/Ballet1.webp",
     description: "Malla de ballet en algodón elástico con tirantes ajustables.",
     sizes: ["XS", "S", "M", "L", "XL"],
     colors: ["Negro", "Rosa", "Blanco"],
