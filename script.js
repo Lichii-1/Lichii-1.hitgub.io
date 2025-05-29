@@ -573,9 +573,20 @@ function setupCheckout() {
 
       let orderSummary = ""
       cart.forEach((item) => {
-        orderSummary += `• ${item.name}\n  Talle: ${item.selectedSize} | Color: ${item.selectedColor}\n  Cantidad: ${item.quantity} | Precio: $${item.price * item.quantity}\n\n`
+        orderSummary += `<div class="order-item">
+          <div class="order-item-name">${item.name}</div>
+          <div class="order-item-details">
+            <div>Talle: ${item.selectedSize} | Color: ${item.selectedColor}</div>
+            <div>Cantidad: ${item.quantity} x $${item.price} = $${item.price * item.quantity}</div>
+          </div>
+        </div>`
       })
-      orderSummary += `Subtotal: $${subtotal}\nEnvío: $${shipping}\nTOTAL: $${total}`
+
+      orderSummary += `<div class="order-summary-totals">
+        <div>Subtotal: $${subtotal}</div>
+        <div>Envío: $${shipping}</div>
+        <div class="order-summary-total">TOTAL: $${total}</div>
+      </div>`
 
       showModal({
         type: "info",
