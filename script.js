@@ -2,7 +2,7 @@ const products = [
   {
     id: 1,
     name: "Malla de Ballet Clásica",
-    price: 2500,
+    price: 14000,
     category: "ballet",
     type: "malla",
     image: "images/Ballet1.webp",
@@ -13,7 +13,7 @@ const products = [
   {
     id: 2,
     name: "Zapatillas de Punta Profesional",
-    price: 4500,
+    price: 20000,
     category: "ballet",
     type: "calzado",
     image: "images/Ballet2.jpg",
@@ -24,7 +24,7 @@ const products = [
   {
     id: 3,
     name: "Zapatillas de Ballet Media Punta",
-    price: 2800,
+    price: 16000,
     category: "ballet",
     type: "calzado",
     image: "images/Ballet3.jpg",
@@ -35,7 +35,7 @@ const products = [
   {
     id: 4,
     name: "Falda de Ballet Gasa",
-    price: 1800,
+    price: 11000,
     category: "ballet",
     type: "falda",
     image: "images/Ballet4.avif",
@@ -46,7 +46,7 @@ const products = [
   {
     id: 5,
     name: "Tutú Clásico",
-    price: 5500,
+    price: 15000,
     category: "ballet",
     type: "tutu",
     image: "images/Ballet5.jpg",
@@ -57,7 +57,7 @@ const products = [
   {
     id: 6,
     name: "Calentadores de Piernas",
-    price: 1200,
+    price: 10000,
     category: "ballet",
     type: "accesorio",
     image: "images/Ballet 6.jpg",
@@ -68,7 +68,7 @@ const products = [
   {
     id: 7,
     name: "Top Jazz Deportivo",
-    price: 1800,
+    price: 8000,
     category: "jazz",
     type: "top",
     image: "images/Jazz1.jpg",
@@ -79,7 +79,7 @@ const products = [
   {
     id: 8,
     name: "Pantalón Jazz Ajustado",
-    price: 2200,
+    price: 12000,
     category: "jazz",
     type: "pantalon",
     image: "images/Jazz2.jpg",
@@ -90,7 +90,7 @@ const products = [
   {
     id: 9,
     name: "Zapatillas Jazz Split Sole",
-    price: 3200,
+    price: 25000,
     category: "jazz",
     type: "calzado",
     image: "images/Jazz3.webp",
@@ -101,7 +101,7 @@ const products = [
   {
     id: 10,
     name: "Shorts Jazz Alto",
-    price: 1600,
+    price: 10000,
     category: "jazz",
     type: "short",
     image: "images/Jazz4.jpg",
@@ -112,7 +112,7 @@ const products = [
   {
     id: 11,
     name: "Conjunto Jazz Completo",
-    price: 3500,
+    price: 15000,
     category: "jazz",
     type: "conjunto",
     image: "images/Jazz5.jpg",
