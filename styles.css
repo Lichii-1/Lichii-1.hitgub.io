@@ -272,7 +272,7 @@ body {
 
 .location {
   padding: 4rem 0;
-  background-color: var(--light-gray);
+  background-color: #eeeeee;
 }
 
 .location h2 {
@@ -1109,7 +1109,8 @@ footer {
 
 .photo-carousel {
   padding: 4rem 0;
-  background-color: var(--white);
+  background-color: #eeeeee
+;
   overflow: hidden;
 }
 
