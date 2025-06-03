@@ -966,6 +966,11 @@ footer {
     padding: 1rem 0;
     display: block;
   }
+
+.nav-menu.active {
+  background-color: red !important;
+}
+
 }
 
 @media (max-width: 480px) {
