@@ -396,7 +396,7 @@ function loadProducts(filter = "all") {
                         <div class="size-selector">
                             <label>Talle:</label>
                             <select id="size-${product.id}">
-                                ${product.sizes.map((size) => `<option value="${size}">${size}">${size}</option>`).join("")}
+                                ${product.sizes.map((size) => `<option value="${size}">${size}</option>`).join("")}
                             </select>
                         </div>
                         <div class="color-selector">
@@ -642,6 +642,7 @@ function setupCheckout() {
               const shipping = 500
               const total = subtotal + shipping
               setTimeout(() => {
+                
                 let orderSummary = ""
                 cart.forEach((item) => {
                   orderSummary += `<div class="order-item">
@@ -749,14 +750,14 @@ function initPaymentMethods() {
 
   if (!paymentOptions.length || !paymentDetails) return
 
-    paymentOptions.forEach((option) => {
+  paymentOptions.forEach((option) => {
     option.addEventListener("change", function () {
       document.querySelectorAll(".payment-method-option").forEach((opt) => {
         opt.classList.remove("selected")
       })
 
+      
       this.closest(".payment-method-option").classList.add("selected")
-
       if (this.value === "Tarjeta de Crédito" || this.value === "Tarjeta de Débito") {
         paymentDetails.classList.add("active")
       } else {
@@ -807,15 +808,19 @@ function showModal(config) {
   overlay.appendChild(modal)
   document.body.appendChild(overlay)
 
+  document.body.style.overflow = "hidden"
+
   setTimeout(() => {
     overlay.classList.add("active")
   }, 10)
 
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) {
-      closeModal()
-    }
-  })
+  if (!config.content || !config.content.includes("payment-form")) {
+    overlay.addEventListener("click", (e) => {
+      if (e.target === overlay) {
+        closeModal()
+      }
+    })
+  }
 
   config.actions.forEach((action, index) => {
     const btn = modal.querySelectorAll(".modal-btn")[index]
@@ -829,6 +834,7 @@ function closeModal() {
     overlay.classList.remove("active")
     setTimeout(() => {
       overlay.remove()
+            document.body.style.overflow = ""
     }, 300)
   }
 }
@@ -958,6 +964,7 @@ function setupCarousel() {
     interval = setInterval(nextSlide, 5000)
   })
 
+  
   let touchStartX = 0
   let touchEndX = 0
 
