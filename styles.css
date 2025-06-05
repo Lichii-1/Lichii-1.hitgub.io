@@ -349,10 +349,14 @@ body {
 }
 
 .filters select {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   border: 2px solid var(--light-blue);
   border-radius: 5px;
   font-size: 1rem;
+  width: 100%;
+  max-width: 300px;
+  background-color: var(--white);
+  cursor: pointer;
 }
 
 .products-grid {
@@ -375,7 +379,7 @@ body {
 
 .product-card img {
   width: 100%;
-  height: 200px;
+  height: 300px;
   object-fit: cover;
 }
 
@@ -918,6 +922,218 @@ footer {
 
 .toast.warning {
   background-color: #f59e0b;
+}
+
+.photo-carousel {
+  padding: 4rem 0;
+  background-color: var(--light-gray);
+}
+
+.photo-carousel h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--primary-blue);
+  font-size: 2rem;
+}
+
+.carousel-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 15px;
+  box-shadow: var(--shadow);
+  margin: 0 auto;
+  max-width: 900px;
+}
+
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+  width: 100%;
+}
+
+.carousel-slide {
+  min-width: 100%;
+  position: relative;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.slide-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+  gap: 0.5rem;
+}
+
+.carousel-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--light-blue);
+  opacity: 0.5;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.carousel-dot.active {
+  opacity: 1;
+  background-color: var(--primary-blue);
+}
+
+.cart-float-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  z-index: 99;
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-size: 24px;
+  color: white;
+}
+
+.cart-float-btn:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cart-float-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: var(--sky-blue);
+  color: var(--primary-blue);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: bold;
+  border: 2px solid white;
+}
+
+.payment-form {
+  margin-top: 1rem;
+}
+
+.payment-methods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.payment-method-option {
+  flex: 1;
+  min-width: 120px;
+  background-color: var(--light-gray);
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: block;
+}
+
+.payment-method-option:hover {
+  background-color: rgba(96, 165, 250, 0.1);
+}
+
+.payment-method-option input {
+  margin-right: 8px;
+}
+
+.payment-method-option.selected {
+  border-color: var(--primary-blue);
+  background-color: rgba(96, 165, 250, 0.2);
+}
+
+.payment-method-option.selected span {
+  font-weight: bold;
+  color: var(--primary-blue);
+}
+
+.payment-details {
+  background-color: var(--light-gray);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  display: none;
+}
+
+.payment-details.active {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+}
+
+.form-control {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid var(--light-blue);
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .payment-methods {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .payment-method-option {
+    width: 100%;
+  }
+
+  .carousel-slide img {
+    height: 250px;
+  }
 }
 
 @media (max-width: 768px) {

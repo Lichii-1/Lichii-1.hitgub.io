@@ -250,7 +250,7 @@ const products = [
     image: "images/Uniforme1.jpeg",
     description: "Buzo cómodo con capucha y logo bordado NB.",
     sizes: ["XS", "S", "M", "L", "XL", "XXL"],
-    colors: ["Blanco","Azul Marino", "Negro", "Gris", "Celeste"],
+    colors: ["Blanco", "Azul Marino", "Negro", "Gris", "Celeste"],
   },
   {
     id: 24,
@@ -396,7 +396,7 @@ function loadProducts(filter = "all") {
                         <div class="size-selector">
                             <label>Talle:</label>
                             <select id="size-${product.id}">
-                                ${product.sizes.map((size) => `<option value="${size}">${size}</option>`).join("")}
+                                ${product.sizes.map((size) => `<option value="${size}">${size}">${size}</option>`).join("")}
                             </select>
                         </div>
                         <div class="color-selector">
@@ -575,63 +575,66 @@ function setupCheckout() {
         title: "Método de Pago",
         message: "Por favor, selecciona tu método de pago para continuar:",
         content: `
-          <div class="payment-form">
-            <div class="form-group">
-              <div class="payment-methods">
-                <div class="payment-method-option">
-                  <input type="radio" name="payment-method" id="payment-credit" value="Tarjeta de Crédito" checked>
-                  <label for="payment-credit">Tarjeta de Crédito</label>
-                </div>
-                <div class="payment-method-option">
-                  <input type="radio" name="payment-method" id="payment-debit" value="Tarjeta de Débito">
-                  <label for="payment-debit">Tarjeta de Débito</label>
-                </div>
-                <div class="payment-method-option">
-                  <input type="radio" name="payment-method" id="payment-transfer" value="Transferencia">
-                  <label for="payment-transfer">Transferencia</label>
-                </div>
-                <div class="payment-method-option">
-                  <input type="radio" name="payment-method" id="payment-cash" value="Efectivo">
-                  <label for="payment-cash">Efectivo</label>
-                </div>
-              </div>
-            </div>
-            <div id="payment-details" class="payment-details">
-              <div class="form-group">
-                <label for="card-name">Nombre en la tarjeta</label>
-                <input type="text" id="card-name" class="form-control" placeholder="Como aparece en la tarjeta">
-              </div>
-              <div class="form-group">
-                <label for="card-number">Número de tarjeta</label>
-                <input type="text" id="card-number" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
-              </div>
-              <div class="form-group" style="display: flex; gap: 1rem;">
-                <div style="flex: 1;">
-                  <label for="card-expiry">Fecha de expiración</label>
-                  <input type="text" id="card-expiry" class="form-control" placeholder="MM/AA">
-                </div>
-                <div style="flex: 1;">
-                  <label for="card-cvv">CVV</label>
-                  <input type="text" id="card-cvv" class="form-control" placeholder="123">
-                </div>
-              </div>
-            </div>
+    <div class="payment-form">
+      <div class="form-group">
+        <div class="payment-methods">
+          <label class="payment-method-option selected">
+            <input type="radio" name="payment-method" value="Tarjeta de Crédito" checked>
+            <span>Tarjeta de Crédito</span>
+          </label>
+          <label class="payment-method-option">
+            <input type="radio" name="payment-method" value="Tarjeta de Débito">
+            <span>Tarjeta de Débito</span>
+          </label>
+          <label class="payment-method-option">
+            <input type="radio" name="payment-method" value="Transferencia">
+            <span>Transferencia</span>
+          </label>
+          <label class="payment-method-option">
+            <input type="radio" name="payment-method" value="Efectivo">
+            <span>Efectivo</span>
+          </label>
+        </div>
+      </div>
+      <div id="payment-details" class="payment-details active">
+        <div class="form-group">
+          <label for="card-name">Nombre en la tarjeta</label>
+          <input type="text" id="card-name" class="form-control" placeholder="Como aparece en la tarjeta">
+        </div>
+        <div class="form-group">
+          <label for="card-number">Número de tarjeta</label>
+          <input type="text" id="card-number" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+        </div>
+        <div class="form-group" style="display: flex; gap: 1rem;">
+          <div style="flex: 1;">
+            <label for="card-expiry">Fecha de expiración</label>
+            <input type="text" id="card-expiry" class="form-control" placeholder="MM/AA">
           </div>
-        `,
+          <div style="flex: 1;">
+            <label for="card-cvv">CVV</label>
+            <input type="text" id="card-cvv" class="form-control" placeholder="123">
+          </div>
+        </div>
+      </div>
+    </div>
+  `,
         actions: [
           {
             text: "Continuar",
             class: "modal-btn-primary",
             action: () => {
               const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value
-              const cardName = document.getElementById("card-name").value
-              const cardNumber = document.getElementById("card-number").value
-              if (
-                (paymentMethod === "Tarjeta de Crédito" || paymentMethod === "Tarjeta de Débito") &&
-                (!cardName || !cardNumber)
-              ) {
-                showToast("Por favor completa los datos de la tarjeta", "warning")
-                return
+              const paymentDetails = document.getElementById("payment-details")
+
+              
+              if (paymentDetails && paymentDetails.classList.contains("active")) {
+                const cardName = document.getElementById("card-name").value.trim()
+                const cardNumber = document.getElementById("card-number").value.trim()
+
+                if (!cardName || !cardNumber) {
+                  showToast("Por favor completa los datos de la tarjeta", "warning")
+                  return
+                }
               }
 
               closeModal()
@@ -639,7 +642,6 @@ function setupCheckout() {
               const shipping = 500
               const total = subtotal + shipping
               setTimeout(() => {
-                // Generar resumen de pedido
                 let orderSummary = ""
                 cart.forEach((item) => {
                   orderSummary += `<div class="order-item">
@@ -651,13 +653,16 @@ function setupCheckout() {
                   </div>`
                 })
 
+                const cardNumber = document.getElementById("card-number")
+                  ? document.getElementById("card-number").value
+                  : ""
                 orderSummary += `<div class="order-summary-totals">
                   <div>Subtotal: $${subtotal}</div>
                   <div>Envío: $${shipping}</div>
                   <div class="order-summary-total">TOTAL: $${total}</div>
                   <div style="margin-top: 0.75rem; font-weight: 600; color: var(--primary-blue);">
                     Método de pago: ${paymentMethod}
-                    ${cardNumber ? `<div style="font-size: 0.9rem;">Tarjeta: XXXX XXXX XXXX ${cardNumber.slice(-4)}</div>` : ""}
+                    ${cardNumber && cardNumber.length >= 4 ? `<div style="font-size: 0.9rem;">Tarjeta: XXXX XXXX XXXX ${cardNumber.slice(-4)}</div>` : ""}
                   </div>
                 </div>`
 
@@ -730,8 +735,35 @@ function setupCheckout() {
           },
         ],
       })
+
+      setTimeout(() => {
+        initPaymentMethods()
+      }, 50)
     })
   }
+}
+
+function initPaymentMethods() {
+  const paymentOptions = document.querySelectorAll('input[name="payment-method"]')
+  const paymentDetails = document.getElementById("payment-details")
+
+  if (!paymentOptions.length || !paymentDetails) return
+
+    paymentOptions.forEach((option) => {
+    option.addEventListener("change", function () {
+      document.querySelectorAll(".payment-method-option").forEach((opt) => {
+        opt.classList.remove("selected")
+      })
+
+      this.closest(".payment-method-option").classList.add("selected")
+
+      if (this.value === "Tarjeta de Crédito" || this.value === "Tarjeta de Débito") {
+        paymentDetails.classList.add("active")
+      } else {
+        paymentDetails.classList.remove("active")
+      }
+    })
+  })
 }
 
 function showModal(config) {
@@ -764,7 +796,7 @@ function showModal(config) {
     </div>
     <div class="modal-body">
       <p>${config.message}</p>
-      ${config.content ? config.content : ""}
+      ${config.content || ""}
       ${config.orderSummary ? `<div class="modal-order-summary">${config.orderSummary}</div>` : ""}
     </div>
     <div class="modal-actions">
@@ -790,19 +822,6 @@ function showModal(config) {
     btn.onclick = action.action
   })
 }
-
-document.addEventListener("click", (e) => {
-  if (e.target && e.target.name === "payment-method") {
-    const paymentDetails = document.getElementById("payment-details")
-    if (paymentDetails) {
-      if (e.target.value === "Tarjeta de Crédito" || e.target.value === "Tarjeta de Débito") {
-        paymentDetails.style.display = "block"
-      } else {
-        paymentDetails.style.display = "none"
-      }
-    }
-  }
-})
 
 function closeModal() {
   const overlay = document.getElementById("modal-overlay")
@@ -840,20 +859,21 @@ function updateCartCount() {
 }
 
 function createFloatingCartButton() {
-  if (!document.getElementById("products-container")) return
-  if (!document.querySelector(".cart-float-btn")) {
-    const floatBtn = document.createElement("div")
-    floatBtn.className = "cart-float-btn"
-    floatBtn.innerHTML = `
-      <img src="/placeholder.svg?height=30&width=30" alt="Carrito">
-      <span class="cart-float-count">0</span>
-    `    
-    floatBtn.addEventListener("click", () => {
-      window.location.href = "carrito.html"
-    })
-    document.body.appendChild(floatBtn)
-    updateFloatingCartCount()
-  }
+  if (document.querySelector(".cart-float-btn")) return
+
+  const floatBtn = document.createElement("div")
+  floatBtn.className = "cart-float-btn"
+  floatBtn.innerHTML = `
+  🛒
+  <span class="cart-float-count">0</span>
+`
+
+  floatBtn.addEventListener("click", () => {
+    window.location.href = "carrito.html"
+  })
+
+  document.body.appendChild(floatBtn)
+  updateFloatingCartCount()
 }
 
 function updateFloatingCartCount() {
@@ -870,7 +890,7 @@ function saveCart() {
 
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount()
-  createFloatingCartButton() // Asegúrate de llamar a esta función aquí
+  createFloatingCartButton() 
 
   const hamburger = document.querySelector(".hamburger")
   const navMenu = document.querySelector(".nav-menu")
@@ -897,6 +917,8 @@ function setupCarousel() {
 
   const slides = document.querySelectorAll(".carousel-slide")
   const dotsContainer = document.querySelector(".carousel-dots")
+
+  dotsContainer.innerHTML = ""
 
   slides.forEach((_, index) => {
     const dot = document.createElement("div")
@@ -925,7 +947,7 @@ function setupCarousel() {
     updateCarousel()
   }
 
-  const interval = setInterval(nextSlide, 5000)
+  let interval = setInterval(nextSlide, 5000)
 
   carouselTrack.addEventListener("mouseenter", () => {
     clearInterval(interval)
@@ -933,12 +955,32 @@ function setupCarousel() {
 
   carouselTrack.addEventListener("mouseleave", () => {
     clearInterval(interval)
-    setInterval(nextSlide, 5000)
+    interval = setInterval(nextSlide, 5000)
   })
+
+  let touchStartX = 0
+  let touchEndX = 0
+
+  carouselTrack.addEventListener("touchstart", (e) => {
+    touchStartX = e.changedTouches[0].screenX
+  })
+
+  carouselTrack.addEventListener("touchend", (e) => {
+    touchEndX = e.changedTouches[0].screenX
+    handleSwipe()
+  })
+
+  function handleSwipe() {
+    if (touchEndX < touchStartX - 50) {
+      currentSlide = (currentSlide + 1) % totalSlides
+    } else if (touchEndX > touchStartX + 50) {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides
+    }
+    updateCarousel()
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Código existente...
   updateCartCount()
 
   const hamburger = document.querySelector(".hamburger")
@@ -953,7 +995,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("products-container")) {
     loadProducts()
     setupFilters()
-    // Crear botón flotante de carrito
     createFloatingCartButton()
   }
 
