@@ -357,8 +357,10 @@ let cart = JSON.parse(localStorage.getItem("cart")) || []
 
 document.addEventListener("DOMContentLoaded", () => {
   updateCartCount()
+
   const hamburger = document.querySelector(".hamburger")
   const navMenu = document.querySelector(".nav-menu")
+
   if (hamburger) {
     hamburger.addEventListener("click", () => {
       navMenu.classList.toggle("active")
@@ -367,6 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("products-container")) {
     loadProducts()
     setupFilters()
+    createFloatingCartButton()
   }
   if (document.getElementById("cart-items")) {
     loadCart()
@@ -567,70 +570,153 @@ function setupCheckout() {
         return
       }
 
-      const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
-      const shipping = 500
-      const total = subtotal + shipping
-
-      let orderSummary = ""
-      cart.forEach((item) => {
-        orderSummary += `<div class="order-item">
-          <div class="order-item-name">${item.name}</div>
-          <div class="order-item-details">
-            <div>Talle: ${item.selectedSize} | Color: ${item.selectedColor}</div>
-            <div>Cantidad: ${item.quantity} x $${item.price} = $${item.price * item.quantity}</div>
-          </div>
-        </div>`
-      })
-
-      orderSummary += `<div class="order-summary-totals">
-        <div>Subtotal: $${subtotal}</div>
-        <div>Envío: $${shipping}</div>
-        <div class="order-summary-total">TOTAL: $${total}</div>
-      </div>`
-
       showModal({
         type: "info",
-        title: "Confirmar Pedido",
-        message: "Revisa tu pedido antes de confirmar:",
-        orderSummary: orderSummary,
-        showLogo: true,
+        title: "Método de Pago",
+        message: "Por favor, selecciona tu método de pago para continuar:",
+        content: `
+          <div class="payment-form">
+            <div class="form-group">
+              <div class="payment-methods">
+                <div class="payment-method-option">
+                  <input type="radio" name="payment-method" id="payment-credit" value="Tarjeta de Crédito" checked>
+                  <label for="payment-credit">Tarjeta de Crédito</label>
+                </div>
+                <div class="payment-method-option">
+                  <input type="radio" name="payment-method" id="payment-debit" value="Tarjeta de Débito">
+                  <label for="payment-debit">Tarjeta de Débito</label>
+                </div>
+                <div class="payment-method-option">
+                  <input type="radio" name="payment-method" id="payment-transfer" value="Transferencia">
+                  <label for="payment-transfer">Transferencia</label>
+                </div>
+                <div class="payment-method-option">
+                  <input type="radio" name="payment-method" id="payment-cash" value="Efectivo">
+                  <label for="payment-cash">Efectivo</label>
+                </div>
+              </div>
+            </div>
+            <div id="payment-details" class="payment-details">
+              <div class="form-group">
+                <label for="card-name">Nombre en la tarjeta</label>
+                <input type="text" id="card-name" class="form-control" placeholder="Como aparece en la tarjeta">
+              </div>
+              <div class="form-group">
+                <label for="card-number">Número de tarjeta</label>
+                <input type="text" id="card-number" class="form-control" placeholder="XXXX XXXX XXXX XXXX">
+              </div>
+              <div class="form-group" style="display: flex; gap: 1rem;">
+                <div style="flex: 1;">
+                  <label for="card-expiry">Fecha de expiración</label>
+                  <input type="text" id="card-expiry" class="form-control" placeholder="MM/AA">
+                </div>
+                <div style="flex: 1;">
+                  <label for="card-cvv">CVV</label>
+                  <input type="text" id="card-cvv" class="form-control" placeholder="123">
+                </div>
+              </div>
+            </div>
+          </div>
+        `,
         actions: [
           {
-            text: "Confirmar Compra",
-            class: "modal-btn-success",
+            text: "Continuar",
+            class: "modal-btn-primary",
             action: () => {
+              const paymentMethod = document.querySelector('input[name="payment-method"]:checked').value
+              const cardName = document.getElementById("card-name").value
+              const cardNumber = document.getElementById("card-number").value
+              if (
+                (paymentMethod === "Tarjeta de Crédito" || paymentMethod === "Tarjeta de Débito") &&
+                (!cardName || !cardNumber)
+              ) {
+                showToast("Por favor completa los datos de la tarjeta", "warning")
+                return
+              }
+
               closeModal()
+              const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+              const shipping = 500
+              const total = subtotal + shipping
               setTimeout(() => {
+                // Generar resumen de pedido
+                let orderSummary = ""
+                cart.forEach((item) => {
+                  orderSummary += `<div class="order-item">
+                    <div class="order-item-name">${item.name}</div>
+                    <div class="order-item-details">
+                      <div>Talle: ${item.selectedSize} | Color: ${item.selectedColor}</div>
+                      <div>Cantidad: ${item.quantity} x $${item.price} = $${item.price * item.quantity}</div>
+                    </div>
+                  </div>`
+                })
+
+                orderSummary += `<div class="order-summary-totals">
+                  <div>Subtotal: $${subtotal}</div>
+                  <div>Envío: $${shipping}</div>
+                  <div class="order-summary-total">TOTAL: $${total}</div>
+                  <div style="margin-top: 0.75rem; font-weight: 600; color: var(--primary-blue);">
+                    Método de pago: ${paymentMethod}
+                    ${cardNumber ? `<div style="font-size: 0.9rem;">Tarjeta: XXXX XXXX XXXX ${cardNumber.slice(-4)}</div>` : ""}
+                  </div>
+                </div>`
+
                 showModal({
-                  type: "success",
-                  title: "¡Compra Exitosa!",
-                  message: `¡Gracias por tu compra! Tu pedido por $${total} ha sido procesado correctamente. Te contactaremos pronto para coordinar el pago y envío.`,
+                  type: "info",
+                  title: "Confirmar Pedido",
+                  message: "Revisa tu pedido antes de confirmar:",
+                  orderSummary: orderSummary,
                   showLogo: true,
-                  showCheckmark: true,
                   actions: [
                     {
-                      text: "Continuar Comprando",
-                      class: "modal-btn-primary",
+                      text: "Confirmar Compra",
+                      class: "modal-btn-success",
                       action: () => {
-                        cart = []
-                        saveCart()
-                        loadCart()
-                        updateCartCount()
                         closeModal()
-                        window.location.href = "productos.html"
+                        setTimeout(() => {
+                          showModal({
+                            type: "success",
+                            title: "¡Compra Exitosa!",
+                            message: `¡Gracias por tu compra! Tu pedido por $${total} ha sido procesado correctamente. Te contactaremos pronto para coordinar el envío.`,
+                            orderSummary:
+                              `<div style="text-align: center; font-weight: bold; margin-bottom: 1rem;">FACTURA SIMPLIFICADA</div>` +
+                              orderSummary,
+                            showLogo: true,
+                            showCheckmark: true,
+                            actions: [
+                              {
+                                text: "Continuar Comprando",
+                                class: "modal-btn-primary",
+                                action: () => {
+                                  cart = []
+                                  saveCart()
+                                  loadCart()
+                                  updateCartCount()
+                                  closeModal()
+                                  window.location.href = "productos.html"
+                                },
+                              },
+                              {
+                                text: "Ir al Inicio",
+                                class: "modal-btn-secondary",
+                                action: () => {
+                                  cart = []
+                                  saveCart()
+                                  loadCart()
+                                  updateCartCount()
+                                  closeModal()
+                                  window.location.href = "index.html"
+                                },
+                              },
+                            ],
+                          })
+                        }, 300)
                       },
                     },
                     {
-                      text: "Ir al Inicio",
+                      text: "Cancelar",
                       class: "modal-btn-secondary",
-                      action: () => {
-                        cart = []
-                        saveCart()
-                        loadCart()
-                        updateCartCount()
-                        closeModal()
-                        window.location.href = "index.html"
-                      },
+                      action: () => closeModal(),
                     },
                   ],
                 })
@@ -678,6 +764,7 @@ function showModal(config) {
     </div>
     <div class="modal-body">
       <p>${config.message}</p>
+      ${config.content ? config.content : ""}
       ${config.orderSummary ? `<div class="modal-order-summary">${config.orderSummary}</div>` : ""}
     </div>
     <div class="modal-actions">
@@ -703,6 +790,19 @@ function showModal(config) {
     btn.onclick = action.action
   })
 }
+
+document.addEventListener("click", (e) => {
+  if (e.target && e.target.name === "payment-method") {
+    const paymentDetails = document.getElementById("payment-details")
+    if (paymentDetails) {
+      if (e.target.value === "Tarjeta de Crédito" || e.target.value === "Tarjeta de Débito") {
+        paymentDetails.style.display = "block"
+      } else {
+        paymentDetails.style.display = "none"
+      }
+    }
+  }
+})
 
 function closeModal() {
   const overlay = document.getElementById("modal-overlay")
@@ -732,16 +832,64 @@ function showToast(message, type = "info") {
     }, 300)
   }, 3000)
 }
-
 function updateCartCount() {
   const count = cart.reduce((sum, item) => sum + item.quantity, 0)
   const countElements = document.querySelectorAll("#cart-count")
   countElements.forEach((el) => (el.textContent = count))
+  updateFloatingCartCount()
+}
+
+function createFloatingCartButton() {
+  if (!document.getElementById("products-container")) return
+  if (!document.querySelector(".cart-float-btn")) {
+    const floatBtn = document.createElement("div")
+    floatBtn.className = "cart-float-btn"
+    floatBtn.innerHTML = `
+      <img src="/placeholder.svg?height=30&width=30" alt="Carrito">
+      <span class="cart-float-count">0</span>
+    `    
+    floatBtn.addEventListener("click", () => {
+      window.location.href = "carrito.html"
+    })
+    document.body.appendChild(floatBtn)
+    updateFloatingCartCount()
+  }
+}
+
+function updateFloatingCartCount() {
+  const countElement = document.querySelector(".cart-float-count")
+  if (countElement) {
+    const count = cart.reduce((sum, item) => sum + item.quantity, 0)
+    countElement.textContent = count
+  }
 }
 
 function saveCart() {
   localStorage.setItem("cart", JSON.stringify(cart))
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  updateCartCount()
+  createFloatingCartButton() // Asegúrate de llamar a esta función aquí
+
+  const hamburger = document.querySelector(".hamburger")
+  const navMenu = document.querySelector(".nav-menu")
+
+  if (hamburger) {
+    hamburger.addEventListener("click", () => {
+      navMenu.classList.toggle("active")
+    })
+  }
+
+  if (document.getElementById("products-container")) {
+    loadProducts()
+    setupFilters()
+  }
+
+  if (document.getElementById("cart-items")) {
+    loadCart()
+  }
+})
 
 function setupCarousel() {
   const carouselTrack = document.querySelector(".carousel-track")
@@ -790,6 +938,7 @@ function setupCarousel() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  // Código existente...
   updateCartCount()
 
   const hamburger = document.querySelector(".hamburger")
@@ -800,6 +949,18 @@ document.addEventListener("DOMContentLoaded", () => {
       navMenu.classList.toggle("active")
     })
   }
+
+  if (document.getElementById("products-container")) {
+    loadProducts()
+    setupFilters()
+    // Crear botón flotante de carrito
+    createFloatingCartButton()
+  }
+
+  if (document.getElementById("cart-items")) {
+    loadCart()
+  }
+
   if (document.querySelector(".carousel-track")) {
     setupCarousel()
   }
